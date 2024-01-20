@@ -4,9 +4,13 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.recebimento.api.domain.base.entities.BaseEntity;
 import com.recebimento.api.domain.users.models.UserModel;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Generated;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.TrueFalseConverter;
+import org.hibernate.type.YesNoConverter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,40 +28,43 @@ public class User extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String Id;
-    @Column(name = "username", length = 100, nullable = false)
-    private String Username;
-    @Column(name = "email", length = 50, nullable = false)
-    private  String Email;
+    @Column(name = "name", length = 100, nullable = false)
+    private String Name;
+    @Column(name = "email", unique = true, length = 50, nullable = false)
+    private  String Username;
     @Column(name = "status", length = 10, nullable = false)
-    private Boolean Status;
+    @Pattern(regexp = "Ativo|Inativo")
+    private String Status;
     @Column(name = "password", length = 100, nullable = false)
     private String Password;
     @Column(name = "profile", length = 3, nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ProfileEnum Profile;
     public  User() {}
 
-    public User(String name, ProfileEnum profile, Boolean status, String password) {
-        ChangeName(name);
-        ChangeProfile(profile);
-        ChangeStatus(status);
-        ChagePassword(password);
+    public User(UserModel userModel) {
+        ChangeName(userModel.name);
+        ChangeUsername(userModel.username);
+        ChangeProfile(userModel.profile);
+        ChangeStatus(userModel.status);
+        ChangePassword(userModel.password);
     }
 
     public void ChangeName(String name) {
-        Username = name;
+        Name = name;
     }
+    public void ChangeUsername(String username) { Username = username; }
     public void ChangeProfile(ProfileEnum profile) {
         Profile = profile;
     }
-    public  void ChangeStatus(Boolean status) {
-        Status = status;
+    public  void ChangeStatus(String status) {
+        Status = status != null ? status : "Inativo";;
     }
-    public void ChagePassword(String password) {
+    public void ChangePassword(String password) {
         Password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
-
-    public UserModel ToMOdel() {
-        return new UserModel(Id, Username, Profile, Status, CreatedAt, UpdatedAt, DeletedAt);
+    public UserModel ToModel() {
+        return new UserModel(Id, Name, Username, Profile, Status, CreatedAt, UpdatedAt, DeletedAt);
     }
+
 }

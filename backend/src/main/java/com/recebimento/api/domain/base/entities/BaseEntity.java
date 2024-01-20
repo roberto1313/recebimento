@@ -19,7 +19,7 @@ public class BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
     protected LocalDateTime UpdatedAt;
     @Timestamp
-    @Column(name = "DeletedAt_at")
+    @Column(name = "Deleted_at")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
     protected LocalDateTime DeletedAt;
 

@@ -1,23 +1,19 @@
 package com.recebimento.api.domain.users;
 import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public enum ProfileEnum {
-    MASTER(1, "MASTER"),
-    ADMIN(2, "ADMIN"),
-    USER(3, "USER");
+    MASTER("MASTER", 1),
+    ADMIN("ADMIN", 2),
+    USER("USER", 3);
 
     @Getter
-    private Integer value = null;
-    private final String profile;
-    ProfileEnum(int value, String profile) {
-        this.value = value;
-        this.profile = profile;
-    }
-    public void getProfile(Integer value) {
-        this.value = value;
-    }
+    private final String value;
+    private final Integer profile;
 
-    @Override
-    public String toString() {
-        return profile;
+    ProfileEnum(String value, Integer profile) {
+        this.profile = profile;
+        this.value = value;
     }
 }

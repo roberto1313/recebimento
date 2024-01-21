@@ -35,7 +35,7 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "status", length = 10, nullable = false)
     @Pattern(regexp = "Ativo|Inativo")
     private String Status;
-    @Column(name = "password", length = 100, nullable = false)
+    @Column(name = "password", length = 100)
     private String Password;
     @Column(name = "profile", length = 3, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -58,7 +58,7 @@ public class User extends BaseEntity implements Serializable {
         Profile = profile;
     }
     public  void ChangeStatus(String status) {
-        Status = status != null ? status : "Inativo";;
+        Status = status != null ? status : "Inativo";
     }
     public void ChangePassword(String password) {
         Password = BCrypt.withDefaults().hashToString(12, password.toCharArray());

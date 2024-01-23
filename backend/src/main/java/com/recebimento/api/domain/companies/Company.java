@@ -70,6 +70,7 @@ public class Company extends BaseEntity {
         ChangeEmail(companyModel.email);
         ChangeContactNumberAddress(companyModel.contactNumber);
         ChangeStatus(companyModel.status);
+        MarkAsUpdated();
     }
     public CompanyModel ToModel() {
         return new CompanyModel(

@@ -67,4 +67,12 @@ public class User extends BaseEntity implements Serializable {
         return new UserModel(Id, Name, Username, Profile, Status, CreatedAt, UpdatedAt, DeletedAt);
     }
 
+    public void Update(UserModel userModel) {
+        ChangeName(userModel.name);
+        ChangeUsername(userModel.username);
+        ChangeProfile(userModel.profile);
+        ChangeStatus(userModel.status);
+        ChangePassword(userModel.password);
+        MarkAsUpdated();
+    }
 }

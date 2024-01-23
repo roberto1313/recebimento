@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface IUserService {
     ResponseEntity<String> create(UserModel userModel);
-
+    ResponseEntity<String> update(UserModel userModel) throws Exception;
     List<UserModel> search();
+
+
 }

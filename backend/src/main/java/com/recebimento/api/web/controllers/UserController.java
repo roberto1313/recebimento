@@ -16,6 +16,11 @@ public class UserController {
     public ResponseEntity<String> create(@RequestBody UserModel userModel) {
         return userService.create(userModel);
     }
+
+    @PutMapping("")
+    public ResponseEntity<String> update(@RequestBody UserModel userModel) throws Exception {
+        return userService.update(userModel);
+    }
     @GetMapping("/search")
     public List<UserModel> search() {
         return userService.search();

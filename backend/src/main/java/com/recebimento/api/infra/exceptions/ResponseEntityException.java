@@ -10,7 +10,7 @@ public class ResponseEntityException extends Exception{
     public static ResponseEntity<String> getResponseEntityMessage(String responseMessage, HttpStatus status) {
         return ResponseEntity.status(status).body("{\"message:\""+ responseMessage + "\"}");
     }
-    public static ResponseEntity<String> getException(String responseMessage) throws Exception {
+    public static void getException(String responseMessage) throws Exception {
         throw new Exception("{\"message:\""+ responseMessage + "\"}");
     }
 }

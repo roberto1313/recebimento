@@ -2,10 +2,13 @@ package com.recebimento.api.domain.companies;
 
 import com.recebimento.api.domain.base.entities.BaseEntity;
 import com.recebimento.api.domain.companies.models.CompanyModel;
+import com.recebimento.api.domain.places.Place;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.List;
 
 @Entity
 @Table(name = "companies")
@@ -31,6 +34,9 @@ public class Company extends BaseEntity {
     @Column(name = "status", length = 10)
     @Pattern(regexp = "Ativo|Inativo")
     private String Status;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Place> Places;
     public Company() {}
 
     public Company(CompanyModel companyModel) {

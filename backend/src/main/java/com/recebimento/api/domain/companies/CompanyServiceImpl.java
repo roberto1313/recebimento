@@ -25,12 +25,6 @@ public class CompanyServiceImpl implements ICompanyService{
         Repository.saveAndFlush(company);
         return ResponseEntityException.getResponseEntityMessage(ReceiptConstants.CREATE_SUCCESS_MESSAGE, HttpStatus.CREATED);
     }
-    private boolean validateFormCompany(CompanyModel companyModel) {
-        return !companyModel.companyName.isEmpty() &&
-                !companyModel.cnpj.isEmpty()
-                && !companyModel.email.isEmpty()
-                && !companyModel.contactNumber.isEmpty();
-    }
     @Override
     public ResponseEntity<String> update(CompanyModel companyModel) throws Exception {
         try {
@@ -44,6 +38,11 @@ public class CompanyServiceImpl implements ICompanyService{
         }
         return ResponseEntityException.getResponseEntityMessage(ReceiptConstants.UPDATE_ERROR_MESSAGE, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @Override
+    public List<CompanyModel> search() {
+        return Repository.search().stream().map(Company::ToModel).toList();
+    }
+
     private Company getCompany(CompanyModel companyModel) throws Exception {
         var company = Repository.getByKey(companyModel.id);
         if(company == null) {
@@ -51,8 +50,10 @@ public class CompanyServiceImpl implements ICompanyService{
         }
         return company;
     }
-    @Override
-    public List<CompanyModel> search() {
-        return Repository.search().stream().map(Company::ToModel).toList();
+    private boolean validateFormCompany(CompanyModel companyModel) {
+        return !companyModel.companyName.isEmpty() &&
+                !companyModel.cnpj.isEmpty()
+                && !companyModel.email.isEmpty()
+                && !companyModel.contactNumber.isEmpty();
     }
 }
